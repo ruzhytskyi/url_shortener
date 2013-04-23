@@ -1,0 +1,28 @@
+Requirements for url converter.
+STAGE_1
+    1. Create 'converter' page that contains:
+        * Input field for url
+        * Button to submit url conversion
+        * Text field to output the resulting url
+    2. Validate form input:
+        * Field is not empty
+        * Entered url redirects to real page (return code 200)
+
+STAGE_2
+    1. Create 'sign_up' page:
+        * User can create his account
+        * Contains field for 'login', 'password', 'confirm password',
+          'submit' button. For now all fields would be mandatory
+        * Redirects to 'statistics' page
+        * Form validation 
+    2. Create 'sign_in' page:
+        * User can sign in and view his 'statistics' page.
+        * Redirects to 'statistics page'
+        * Form validation
+    3. Create 'statistics' page:
+        * Page contains table with next fields:
+            - date of link creation;
+            - short link;
+            - full link;
+            - number of redirections;
+        * Link to 'converter' page
