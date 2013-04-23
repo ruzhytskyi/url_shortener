@@ -1,6 +1,6 @@
-Requirements for url converter.
+Requirements for url shortener.
 STAGE_1
-    1. Create 'converter' page that contains:
+    1. Create 'shortener' page that contains:
         * Input field for url
         * Button to submit url conversion
         * Text field to output the resulting url
@@ -25,4 +25,4 @@ STAGE_2
             - short link;
             - full link;
             - number of redirections;
-        * Link to 'converter' page
+        * Link to 'shortener' page
