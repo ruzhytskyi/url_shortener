@@ -10,9 +10,20 @@
     <form method=post>
       <fieldset>
         <div class="span4">
-            <label>{{ short_url }}</label>
-            <input class="span4" type="text" name="full_url" placeholder="Drop your url here">
+          {% if not short_url %}
+            <label>Here will be you shout url</label>
+          {% else %}
+            <a href={{ short_url }}>{{ short_url }}</a>
+          {% endif %}
+            {{ form.full_url(class="span4", placeholder="Drop your url here") }}
             <button type="submit" class="btn">Make it short!</button>
+            {% if form.full_url.errors %}
+              <ul class="text-error">
+                {% for error in form.full_url.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}           
         </div>
       </fieldset>
     </form>
