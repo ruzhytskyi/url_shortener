@@ -22,6 +22,10 @@ def shortener():
             pass
     return render_template('shortener.html', short_url=short_url, form=shortener_form)
 
+@app.route('/sign_up', methods=['GET', 'POST'])
+def sign_up():
+    return render_template('sign_up.html')
+
 @app.route('/<url_hash>', methods=['GET'])
 def redirection(url_hash):
     full_url = Hash.query.filter_by(url_hash=url_hash).first().full_url
