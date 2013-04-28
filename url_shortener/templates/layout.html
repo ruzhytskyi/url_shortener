@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Url Shortener</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <!-- Le styles -->
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+      .form-signup,
+      .form-shortener {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+
+      .form-signup .form-signup-heading,
+      .form-signup .checkbox,
+      .form-shortener .label,
+      .form-shortener .input-block-level,
+      .form-shortener .btn {
+        margin-bottom: 15px;
+      }
+      .form-signup input[type="text"],
+      .form-signup input[type="password"],
+      .form-shortener input[type="text"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="#">Url Shortener</a>
+          <ul class="nav">
+            <li><a href="#">Stats</a></li>
+          </ul>
+          <form class="navbar-form pull-right">
+            <input type="text" class="span2">
+            <input type="text" class="span2">
+            <button type="submit" class="btn">Sing in</button>
+            <button class="btn">Sign up</button>
+          </form>
+        </div>
+      </div> 
+      {% block body %}
+      {% endblock %}
+    </div>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  </body>
+</html>
