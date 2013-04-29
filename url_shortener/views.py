@@ -39,6 +39,11 @@ def sign_up():
     elif request.method == 'GET':
         return render_template('sign_up.html', form=sign_up_form)
 
+@app.route('/sign_out', methods=['GET'])
+def sign_out():
+    session['login'] = None
+    return redirect(url_for('shortener'))
+
 @app.route('/<url_hash>', methods=['GET'])
 def redirection(url_hash):
     full_url = Hash.query.filter_by(url_hash=url_hash).first().full_url

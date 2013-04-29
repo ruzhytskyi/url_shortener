@@ -32,7 +32,7 @@ class SignUpForm(Form):
 
     def validate_login(form, field):
         if User.query.filter_by(login=field.data).first():
-            raise ValidationError('User with login %s already exists'
+            raise ValidationError("User with login '%s' already exists"
                                   % field.data)
 
     def validate_confirmation(form, field):

@@ -50,15 +50,21 @@
       <div class="navbar">
         <div class="navbar-inner">
           <a class="brand" href="#">Url Shortener</a>
+          {% if session['login'] %}
           <ul class="nav">
             <li><a href="#">Stats</a></li>
           </ul>
+          <form class="navbar-form pull-right" action="sign_out">
+            <button class="btn">Sign out</button>
+          </form>
+          {% else %}
           <form class="navbar-form pull-right" method="post" action="sign_in">
             <input type="text" class="span2" placeholder="Login">
             <input type="text" class="span2" placeholder="Password">
             <button type="submit" class="btn">Sing in</button>
             <button class="btn" formmethod="get" formaction="sign_up">Sign up</button>
           </form>
+          {% endif %}
         </div>
       </div> 
       {% block body %}
