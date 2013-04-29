@@ -1,10 +1,31 @@
 {% extends "layout.html" %}
 {% block body %}
-  <form class="form-signup">
+  <form class="form-signup" method="post">
     <h4 class="form-signup-heading">Please sign up</h4>
-    <input type="text" class="input-block-level" placeholder="Login">
-    <input type="password" class="input-block-level" placeholder="Password">
-    <input type="password" class="input-block-level" placeholder="Repeat password">
+    {{ form.login(class="input-block-level", placeholder="Login") }}
+    {% if form.login.errors %}
+      <ul class="text-error">
+        {% for error in form.login.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}           
+    {{ form.password(class="input-block-level", placeholder="Password") }}
+    {% if form.password.errors %}
+      <ul class="text-error">
+        {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}           
+    {{ form.confirmation(class="input-block-level", placeholder="Repeat password") }}
+    {% if form.confirmation.errors %}
+      <ul class="text-error">
+        {% for error in form.confirmation.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}           
     <button class="btn btn-primary" type="submit">Sign up</button>
   </form>
 {% endblock %}

@@ -30,10 +30,10 @@
       .form-signup .form-signup-heading,
       .form-signup .checkbox,
       .form-shortener .label,
-      .form-shortener .input-block-level,
       .form-shortener .btn {
         margin-bottom: 15px;
       }
+
       .form-signup input[type="text"],
       .form-signup input[type="password"],
       .form-shortener input[type="text"] {
@@ -53,11 +53,11 @@
           <ul class="nav">
             <li><a href="#">Stats</a></li>
           </ul>
-          <form class="navbar-form pull-right">
+          <form class="navbar-form pull-right" method="post" action="sign_in">
             <input type="text" class="span2" placeholder="Login">
             <input type="text" class="span2" placeholder="Password">
             <button type="submit" class="btn">Sing in</button>
-            <button class="btn">Sign up</button>
+            <button class="btn" formmethod="get" formaction="sign_up">Sign up</button>
           </form>
         </div>
       </div> 

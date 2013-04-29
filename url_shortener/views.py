@@ -1,8 +1,8 @@
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for, session
 from url_shortener import app, db
-from forms import ShortenerForm
+from forms import ShortenerForm, SignUpForm
 from tools import make_hash, make_short_url
-from models import Hash
+from models import Hash, User
 
 @app.route('/shortener', methods=['GET', 'POST'])
 def shortener():
@@ -24,7 +24,20 @@ def shortener():
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
-    return render_template('sign_up.html')
+    sign_up_form = SignUpForm(request.form)
+    if request.method == 'POST':
+        if sign_up_form.validate():
+            login = sign_up_form.login.data
+            password = sign_up_form.password.data
+            session['login'] = login
+            entry = User(login, password)
+            db.session.add(entry)
+            db.session.commit()
+            return redirect(url_for('shortener')) 
+        else:
+            return render_template('sign_up.html', form=sign_up_form)
+    elif request.method == 'GET':
+        return render_template('sign_up.html', form=sign_up_form)
 
 @app.route('/<url_hash>', methods=['GET'])
 def redirection(url_hash):
