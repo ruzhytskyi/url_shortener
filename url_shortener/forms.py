@@ -39,3 +39,21 @@ class SignUpForm(Form):
         if field.data != form.password.data:
             raise ValidationError("Confirmation doesn't match password")
         
+class SignInForm(Form):
+    no_login = 'Please, provide your login'
+    no_pass = 'Please, provide your password'
+    login = TextField('Login',
+                      [validators.InputRequired(message=no_login)])
+    password = PasswordField('Password',
+                             [validators.InputRequired(message=no_pass)])
+
+    def validate_login(form, field):
+        if User.query.filter_by(login=field.data).first() == None:
+            raise ValidationError("User with login '%s' doesn't exist"
+                                 % field.data)
+
+    def validate_password(form, field):
+        if form.login.errors == None:
+            password = User.query.filter_by(login=form.login.data).first().password
+            if password != field.data:
+                raise ValidationError("Wrong password")
