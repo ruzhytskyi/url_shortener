@@ -14,16 +14,29 @@ def shortener():
     short_url = ''
     if request.method == 'POST' and shortener_form.validate():
         full_url = shortener_form.full_url.data
-        url_hash = make_hash(full_url) 
+        logged_in = session.has_key('login') and session['login']
+        if logged_in:
+            url_hash = make_hash(full_url+session['login']) 
+        else:
+            url_hash = make_hash(full_url)
         short_url = make_short_url(app.config['HOST'],
                                    app.config['PORT'],
                                    url_hash)
-        entry = Hash(url_hash, full_url)
-        db.session.add(entry)
-        try:
-            db.session.commit()
-        except:
-            pass
+        if Hash.query.filter_by(url_hash=url_hash).first() == None:
+            if logged_in:
+                user = User.query.filter_by(login=session['login']).first()
+                hash_obj = Hash(url_hash, full_url)
+                user.hashes.append(hash_obj)
+                db.session.commit()
+            else:
+                user = User.query.filter_by(login='not_registered').first()
+                if not user:
+                    user = User('not_registered', 'pass')
+                    db.session.add(user)
+                hash_obj = Hash(url_hash, full_url)
+                user.hashes.append(hash_obj)
+                db.session.commit()
+               
     return render_template('shortener.html', short_url=short_url, form=shortener_form)
 
 @app.route('/sign_up', methods=['GET', 'POST'])
@@ -34,8 +47,8 @@ def sign_up():
             login = sign_up_form.login.data
             password = sign_up_form.password.data
             session['login'] = login
-            entry = User(login, password)
-            db.session.add(entry)
+            user = User(login, password)
+            db.session.add(user)
             db.session.commit()
             return redirect(url_for('shortener')) 
         else:
@@ -47,7 +60,9 @@ def sign_up():
 def sign_in():
     sign_in_form = SignInForm(request.form)
     if sign_in_form.validate():
-        session['login'] = sign_in_form.login.data
+        login = sign_in_form.login.data
+        password = sign_in_form.password.data
+        session['login'] = login 
         return redirect(url_for('shortener'))
     else:
         return render_template('sign_in_errors.html', form=sign_in_form)
