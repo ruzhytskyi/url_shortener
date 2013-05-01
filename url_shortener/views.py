@@ -74,8 +74,22 @@ def sign_out():
 
 @app.route('/<url_hash>', methods=['GET'])
 def redirection(url_hash):
-    full_url = Hash.query.filter_by(url_hash=url_hash).first().full_url
+    hash_obj = Hash.query.filter_by(url_hash=url_hash).first()
+    hash_obj.redirects += 1
+    db.session.commit()
+    full_url = hash_obj.full_url
     return redirect(full_url) 
+
+@app.route('/statistics', methods=['GET'])
+def statistics():
+    user_id = User.query.filter_by(login=session['login']).first().id
+    hashes = Hash.query.filter_by(user_id=user_id)
+    for hash_obj in hashes:
+        short_url = make_short_url(app.config['HOST'],
+                                   app.config['PORT'],
+                                   hash_obj.url_hash)
+        hash_obj.url_hash = short_url 
+    return render_template('statistics.html', hashes=enumerate(hashes))
 
 @app.route('/favicon.ico', methods=['GET'])
 def favicon():

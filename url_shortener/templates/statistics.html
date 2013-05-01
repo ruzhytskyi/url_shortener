@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+  <table class="table table-bordered">
+    <tr>
+      <td>#</td>
+      <td>Creation date</td>
+      <td>Short url</td>
+      <td>Full url</td>
+      <td>Redirects</td>
+    </tr>
+    {% for i, hash in hashes %}
+    <tr>
+      <td>{{ i+1 }}</td>
+      <td>{{ hash.creation_date.__str__()[:-7] }}</td>
+      <td>{{ hash.url_hash }}</td>
+      <td>{{ hash.full_url }}</td>
+      <td>{{ hash.redirects }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
