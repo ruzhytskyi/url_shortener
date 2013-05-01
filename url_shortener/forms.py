@@ -53,7 +53,7 @@ class SignInForm(Form):
                                  % field.data)
 
     def validate_password(form, field):
-        if form.login.errors == None:
+        if form.login.errors == []:
             password = User.query.filter_by(login=form.login.data).first().password
             if password != field.data:
                 raise ValidationError("Wrong password")

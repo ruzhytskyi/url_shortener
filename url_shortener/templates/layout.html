@@ -43,6 +43,9 @@
         padding: 7px 9px;
       }
 
+      .logged-text {
+        margin-right: 20px;
+      }
     </style>
   </head>
   <body>
@@ -57,6 +60,7 @@
           <form class="navbar-form pull-right" action="sign_out">
             <button class="btn">Sign out</button>
           </form>
+          <p class="logged-text navbar-text pull-right">Logged in as '{{ session['login'] }}'</p>
           {% else %}
           <form class="navbar-form pull-right" method="post" action="sign_in">
             {{ g.si_form.login(class="span2", placeholder="Login") }}
