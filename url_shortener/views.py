@@ -80,7 +80,7 @@ def redirection(url_hash):
     hash_obj.redirects += 1
     db.session.commit()
     full_url = hash_obj.full_url
-    return redirect(full_url) 
+    return redirect(full_url.strip()) 
 
 @app.route('/statistics', methods=['GET'])
 def statistics():
