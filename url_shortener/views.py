@@ -84,14 +84,19 @@ def redirection(url_hash):
 
 @app.route('/statistics', methods=['GET'])
 def statistics():
-    user_id = User.query.filter_by(login=session['login']).first().id
-    hashes = Hash.query.filter_by(user_id=user_id)
-    for hash_obj in hashes:
-        short_url = make_short_url(app.config['HOST'],
-                                   app.config['PORT'],
-                                   hash_obj.url_hash)
-        hash_obj.url_hash = short_url 
-    return render_template('statistics.html', hashes=enumerate(hashes))
+    logged_in = session.has_key('login') and session['login']
+    if logged_in:
+        user_id = User.query.filter_by(login=session['login']).first().id
+        hashes = Hash.query.filter_by(user_id=user_id)
+        for hash_obj in hashes:
+            short_url = make_short_url(app.config['HOST'],
+                                       app.config['PORT'],
+                                       hash_obj.url_hash)
+            hash_obj.url_hash = short_url 
+        return render_template('statistics.html', hashes=enumerate(hashes))
+    else:
+        errors = ['You should log in first']
+        return render_template('errors.html', errors=errors)
 
 @app.route('/favicon.ico', methods=['GET'])
 def favicon():
