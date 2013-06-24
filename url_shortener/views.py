@@ -65,7 +65,9 @@ def sign_in():
         session['login'] = login 
         return redirect(url_for('shortener'))
     else:
-        return render_template('sign_in_errors.html', form=sign_in_form)
+        errors = sign_in_form.login.errors +\
+                 sign_in_form.password.errors 
+        return render_template('errors.html', errors=errors)
 
 @app.route('/sign_out', methods=['GET'])
 def sign_out():

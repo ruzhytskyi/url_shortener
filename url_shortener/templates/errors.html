@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if errors %}
+    <ul class="text-error">
+      {% for error in errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}           
+{% endblock %}
