@@ -1,3 +1,4 @@
+from url_shortener import app
 from hashlib import md5
 from url_shortener import db
 
@@ -12,6 +13,11 @@ def make_short_url(host, port, url_hash):
     Returns an url composed from host, port and hash
     """
     return "http://%s:%s/%s" % (host, port, url_hash)
+
+def get_service_url():
+    host = app.config['HOST']
+    port = app.config['PORT']
+    return "http://%s:%s" % (host, port)
 
 def recreate_db():
     db.drop_all()

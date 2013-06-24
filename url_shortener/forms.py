@@ -2,6 +2,7 @@ from wtforms import Form, TextField, PasswordField, validators
 from wtforms.validators import ValidationError
 from urllib2 import urlopen, URLError, HTTPError
 from models import User
+from tools import get_service_url
 
 class ShortenerForm(Form):
     no_input_message = 'Paste url and try again'
@@ -11,7 +12,8 @@ class ShortenerForm(Form):
     def validate_full_url(form, field):
         url = field.data
         try:
-            urlopen(url)
+            if not url.strip() == get_service_url() + '/shortener':
+                urlopen(url)
         except HTTPError:
             raise ValidationError('Provided url results in http error, paste another one') 
         except URLError:
